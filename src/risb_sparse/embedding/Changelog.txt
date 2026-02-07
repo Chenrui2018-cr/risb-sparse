@@ -1,0 +1,6 @@
+任何时候，当前使用的版本文件不添加任何后缀。
+循环U值：更新相互作用时间在轨道数目多时很长，但改变相互作用项实际上每次改变的只是矩阵前面的系数(前提是只有一种相互作用），所以在只有hubbard时候比较简单，可以在对U进行循环前，先初始化一个U=1的相互作用项，之后更新相互作用的方式是通过访问update_h_int实现，这样如果只有hubbard interaciton，那么可以只初始化一次相互作用，省去了不少时间，因为interaction是在embedding中设置的，所以这样做是合理的。
+(25.10.24)存了一个正常版本(Normal version)，在之前的程序中无需进行这样的优化时，需要使用这个版本来保证已有代码正常运行，这个版本不包含任何创建embedding时初始化相互作用的操作。
+而在处理六角cluster时，需要用到以上的优化方式
+(25.10.25)Include parallel running, old version save as SolveEmbeddingSparse(non-para,10.25).
+(25.10.25)当前版本：include parallel construction of the embedding Hamiltonian，后续还可以再更新S等物理量的计算，因为实际上S的算符是不需要每一次重复进行计算的。已更新，save one copy of this version as SolveEmbeddingSparse(para,10.29)

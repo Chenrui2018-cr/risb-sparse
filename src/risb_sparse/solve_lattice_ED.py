@@ -601,13 +601,13 @@ class LatticeSolver:
             # If the largest element of Z = R†R is smaller than a threshold (e.g., 1e-3),
             # we assume the solution is unphysical or diverging,
             # skip embedding solve and terminate the iteration with the current result.
-            tor = 1e-3
+            tor = 1e-2
             small_R = False
             for bl, rblock in self.R[0].items():
                 z_temp = rblock.conj().T @ rblock
-                if np.max(np.abs(z_temp)) < tor:
+                z_diag = np.real(np.diag(z_temp))
+                if np.max(np.abs(z_diag)) < tor:
                     small_R = True
-                    break
             if not small_R: # solve the embedding problem only if R is below the threshold
                 try:
                     self.embedding[i].solve(**embedding_param[i])                        
@@ -732,7 +732,7 @@ class LatticeSolver:
         if embedding_param is None:
             embedding_param = [{} for i in range(self.n_clusters)]
         
-        print("Begin solving lattice...",flush=True) if test else None
+        #print("Begin solving lattice...",flush=True) if test else None
 
         if one_shot:
             self.Lambda, self.R, _, _ = self.one_cycle(embedding_param, kweight_param)

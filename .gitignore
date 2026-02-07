@@ -19,3 +19,15 @@ _build
 .vscode
 
 src/risb/version.py
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Backup and copy files
+*copy.py
+*Copy.py
+*(Normal).py
+*(non-para*).py
+*(para*).py
